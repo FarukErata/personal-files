@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faruk Erata - CV</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .download-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        @media print {
+            .download-btn {
+                display: none;
+            }
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .cv-container {
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
+
+        .left-column {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 30px;
+        }
+
+        .right-column {
+            padding: 40px 35px;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #34495e;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            font-weight: bold;
+            color: white;
+            overflow: hidden;
+            border: 4px solid #3498db;
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .name {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            line-height: 1.1;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 40px;
+            color: #bdc3c7;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .left-section-title {
+            color: #3498db;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .contact-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            width: 16px;
+            height: 16px;
+            fill: #3498db;
+        }
+
+        .skill-category {
+            margin-bottom: 20px;
+        }
+
+        .skill-category h4 {
+            color: #3498db;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 5px;
+            font-size: 13px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .skill-list li:before {
+            content: "•";
+            color: #3498db;
+            position: absolute;
+            left: 0;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 25px;
+        }
+
+        .job-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .company {
+            font-size: 14px;
+            color: #3498db;
+            margin-bottom: 8px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .description ul {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        .description li {
+            margin-bottom: 3px;
+        }
+
+        @media print {
+            body {
+                background: none;
+            }
+            .cv-container {
+                box-shadow: none;
+                margin: 0;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="download-btn" onclick="downloadPDF()">📄 PDF İndir</button>
+    
+    <div class="cv-container" id="cv-content">
+        <div class="left-column">
+            <div class="profile-photo">
+                <!-- Replace 'photo.jpg' with your actual photo file name -->
+                <img src="photo.jpg" alt="Faruk Erata" onerror="this.style.display='none'; this.parentNode.innerHTML='FE';">
+            </div>
+            
+            <div class="section">
+                <h3 class="left-section-title">İLETİŞİM</h3>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M6.62,10.79C8.06,13.62 10.38,15.94 13.21,17.38L15.41,15.18C15.69,14.9 16.08,14.82 16.43,14.93C17.55,15.3 18.75,15.5 20,15.5A1,1 0 0,1 21,16.5V20A1,1 0 0,1 20,21A17,17 0 0,1 3,4A1,1 0 0,1 4,3H7.5A1,1 0 0,1 8.5,4C8.5,5.25 8.7,6.45 9.07,7.57C9.18,7.92 9.1,8.31 8.82,8.59L6.62,10.79Z"/>
+                    </svg>
+                    +90 536 688 16 60
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20,8L12,13L4,8V6L12,11L20,6M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4Z"/>
+                    </svg>
+                    eratafaruk@gmail.com
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                    LinkedIn
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="left-section-title">BECERİLER</h3>
+                
+                <div class="skill-category">
+                    <h4>Microsoft Office Programları:</h4>
+                    <ul class="skill-list">
+                        <li>Excel, Word, PowerPoint</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Yazılım Dilleri:</h4>
+                    <ul class="skill-list">
+                        <li>Java, Python</li>
+                        <li>SQL, Troia</li>
+                        <li>C#, C++</li>
+                        <li>Flask API (Python)</li>
+                    </ul>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Yazılım Uygulamaları:</h4>
+                    <ul class="skill-list">
+                        <li>Visual Studio, VS Code</li>
+						<li>MSSQL Database Management</li>
+                        <li>Canias ERP, AINOS ERP</li>
+                        <li>Cisco Packet Tracer</li>
+                        <li>IntelliJ IDEA</li>
+                        <li>SoapUI, Postman</li>
+                        <li>Jamovi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 class="left-section-title">YABANCI DİLLER</h3>
+                <ul class="skill-list">
+                    <li>İngilizce - İleri Seviye</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="header">
+                <h1 class="name">FARUK<br>ERATA</h1>
+                <p class="title">Bilişim Sistemleri Mühendisi</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <svg style="width: 20px; height: 20px; fill: #3498db;" viewBox="0 0 24 24">
+                        <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7.07,18.28C7.5,17.38 10.12,16.5 12,16.5C13.88,16.5 16.5,17.38 16.93,18.28C15.57,19.36 13.86,20 12,20C10.14,20 8.43,19.36 7.07,18.28M18.36,16.83C16.93,15.09 13.46,14.5 12,14.5C10.54,14.5 7.07,15.09 5.64,16.83C4.62,15.5 4,13.82 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,13.82 19.38,15.5 18.36,16.83M12,6C10.06,6 8.5,7.56 8.5,9.5C8.5,11.44 10.06,13 12,13C13.94,13 15.5,11.44 15.5,9.5C15.5,7.56 13.94,6 12,6M12,11A1.5,1.5 0 0,1 10.5,9.5A1.5,1.5 0 0,1 12,8A1.5,1.5 0 0,1 13.5,9.5A1.5,1.5 0 0,1 12,11Z"/>
+                    </svg>
+                    HAKKIMDA
+                </h2>
+                <p class="description">
+                    Sakarya Üniversitesi Bilişim Sistemleri Mühendisliği Bölümünde okudum. 
+                    Java, Python, SQL, Troia başta olmak üzere birden çok yazılım diline orta-ileri derecede 
+                    hakimim. Flask API geliştirme konusunda deneyimim bulunmaktadır. Üniversite eğitimim sırasında 
+                    Erdal Yaman ve İlker Bayraktar tarafından Canias ve Troia dili üzerine eğitimler aldım. 
+                    Kurumsal ERP sistemleri konusunda praktik deneyime sahibim.
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <svg style="width: 20px; height: 20px; fill: #3498db;" viewBox="0 0 24 24">
+                        <path d="M20,6C20.58,6 21.05,6.2 21.42,6.59C21.8,7 22,7.45 22,8V19C22,19.55 21.8,20 21.42,20.41C21.05,20.8 20.58,21 20,21H4C3.42,21 2.95,20.8 2.58,20.41C2.2,20 2,19.55 2,19V8C2,7.45 2.2,7 2.58,6.59C2.95,6.2 3.42,6 4,6H8V4C8,3.42 8.2,2.95 8.58,2.58C8.95,2.2 9.42,2 10,2H14C14.58,2 15.05,2.2 15.42,2.58C15.8,2.95 16,3.42 16,4V6H20M4,8V19H20V8H4M10,4V6H14V4H10Z"/>
+                    </svg>
+                    İŞ DENEYİMİ
+                </h2>
+                
+                <div class="experience-item">
+                    <h3 class="job-title">Yazılım Geliştirici</h3>
+                    <p class="company">AINOS Yazılım - ERP Sistemleri</p>
+                    <p class="date">2024 - Devam Ediyor</p>
+                    <div class="description">
+                        <ul>
+                            <li>Kurumsal ERP sistemleri geliştirme ve bakım</li>
+                            <li>Python Flask API geliştirme</li>
+                            <li>Veritabanı yönetimi ve optimizasyon</li>
+                            <li>Müşteri ihtiyaçlarına yönelik yazılım çözümleri</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="job-title">Stajyer Yazılım Geliştirici</h3>
+                    <p class="company">Insotech Yazılım Firması</p>
+                    <p class="date">2023</p>
+                    <div class="description">
+                        <ul>
+                            <li>Java ile yazılım geliştirme projeleri</li>
+                            <li>Veritabanı tasarımı ve SQL sorguları</li>
+                            <li>Yazılım test süreçleri</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <h3 class="job-title">Yazılım Geliştirici</h3>
+                    <p class="company">ID3 Yazılım Firması</p>
+                    <p class="date">2022-2023</p>
+                    <div class="description">
+                        <ul>
+                            <li>Web tabanlı uygulama geliştirme</li>
+                            <li>API entegrasyonları</li>
+                            <li>Kod dokümantasyonu ve versiyon kontrolü</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <svg style="width: 20px; height: 20px; fill: #3498db;" viewBox="0 0 24 24">
+                        <path d="M12,3L1,9L12,15L21,10.09V17H23V9M5,13.18V17.18L12,21L19,17.18V13.18L12,17L5,13.18Z"/>
+                    </svg>
+                    EĞİTİM
+                </h2>
+                
+                <div class="education-item">
+                    <h3 class="job-title">Bilişim Sistemleri Mühendisliği</h3>
+                    <p class="company">SAKARYA ÜNİVERSİTESİ</p>
+                    <p class="date">2020-2024</p>
+                    <div class="description">
+                        Lisans derecesi ile mezun oldum. Yazılım mühendisliği, veritabanı yönetimi, 
+                        sistem analizi ve tasarımı konularında kapsamlı eğitim aldım.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('cv-content');
+            const opt = {
+                margin: 0.5,
+                filename: 'Faruk_Erata_CV.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
